@@ -4,9 +4,10 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
+  SafeAreaView,
 } from "react-native";
 import axios from "axios";
-import { IMessagesType, TMessage, TParticipant } from "./types";
+import { TMessage, TParticipant } from "./types";
 import MessageList from "./components/MessageList";
 import InputBar from "./components/InputBar";
 import ImageModal from "./components/ImageModal";
@@ -77,23 +78,25 @@ const Home: React.FC = () => {
       <ActivityIndicator size="large" />
     </View>
   ) : (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      style={{ flex: 1 }}
-    >
-      <MessageList />
-      <InputBar
-        editedMessage={editedMessage}
-        setEditedMessage={setEditedMessage}
-        onSendMessage={sendMessage}
-      />
-      <ImageModal
-        modalVisible={modalVisible}
-        imageUrl={selectedImage}
-        onClose={() => setModalVisible(false)}
-        loadingImage={false}
-      />
-    </KeyboardAvoidingView>
+    <SafeAreaView style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={{ flex: 1 }}
+      >
+        <MessageList />
+        <InputBar
+          editedMessage={editedMessage}
+          setEditedMessage={setEditedMessage}
+          onSendMessage={sendMessage}
+        />
+        <ImageModal
+          modalVisible={modalVisible}
+          imageUrl={selectedImage}
+          onClose={() => setModalVisible(false)}
+          loadingImage={false}
+        />
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 

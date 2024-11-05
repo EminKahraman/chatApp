@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { TMessage, TParticipant } from "../types";
 import Reactions from "./Reactions";
 import { useMessagesStore } from "../stores/messageStore";
+import { Link } from "expo-router";
 
 interface MessageItemProps {
   message: TMessage;
@@ -27,18 +28,26 @@ const MessageItem: React.FC<MessageItemProps> = ({ message, participants }) => {
       ]}
     >
       {author && (
-        <View style={styles.header}>
+        <Link
+          href={{
+            pathname: "/profileDetail",
+            params: { uuid: author.uuid },
+          }}
+          style={styles.header}
+        >
           <Image
             source={{ uri: author.avatarUrl || "" }}
             style={styles.avatar}
           />
+
           <View style={styles.headerText}>
             <Text style={styles.senderName}>{author.name}</Text>
+
             <Text style={styles.timestamp}>
               {dayjs(message.sentAt).format("HH:mm")}
             </Text>
           </View>
-        </View>
+        </Link>
       )}
       <Text style={styles.messageText}>{message.text}</Text>
       {message.attachments &&
@@ -132,7 +141,7 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
   },
   editButtonText: {
-    color: "blue",
+    color: "yellow",
   },
 });
 
